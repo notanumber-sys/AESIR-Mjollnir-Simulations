@@ -8,7 +8,7 @@ CT_mf_ox = zeros(length(CT_Cd),50);
 
 figure(5)
 
-for i=1:length(CT_Cd)  % TODO: What is this function?
+for i=1:length(CT_Cd)
     [CT_Pcc, CT_mf_ox(i,:)] = critical_mf_Moody(CT_P_tank, CT_T_tank, CT_Cd(i));
     
     plot(CT_P_tank-CT_Pcc,CT_mf_ox(i,:))

@@ -2,8 +2,6 @@ clc
 clear
 clear global
 
-path(pathdef);
-
 addpath('./Datasets');
 addpath('./Simulation')
 addpath('./Simulation/Combustion');

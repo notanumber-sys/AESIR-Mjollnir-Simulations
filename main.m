@@ -17,9 +17,9 @@ setup;
 %% User settings.
 run_simulation = true;      % True if the simulation should be run, if false it will load the most recent simulation.
 process_data = false;        % TODO: it would be nice to integrate this more properly into the main.
-data_name = "Datasets/HT-2/ht22_large.mat";
+data_name = "Datasets/HT-2/ht21_large.mat";
 
-plot_data = true;           % True if the data should be plot together with the simulations.
+plot_data = false;           % True if the data should be plot together with the simulations.
 save_plots = true;          % True if the resulting plots should be saved.
 
 %% Model parameters.

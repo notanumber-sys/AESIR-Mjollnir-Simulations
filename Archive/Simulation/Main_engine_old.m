@@ -1,5 +1,3 @@
-% TODO: seems to be a copy of Main_engine.m, so I think it can be removed.
-
 tic
 run('./../setup')
 
