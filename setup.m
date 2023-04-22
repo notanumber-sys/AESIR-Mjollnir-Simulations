@@ -1,15 +1,10 @@
 clc
-clear all
-Data
-
-
-path(pathdef);
+clear
+clear global
 
 addpath('./Datasets');
-addpath('./Whole Engine')
-addpath('./Whole Engine/combustion');
-addpath('./Whole Engine/thrust');
-addpath('./Whole Engine/flight');
-addpath('./Whole Engine/plots');
-addpath('./Tank/Tank Filling - Non-cst Storage P');
-addpath('./Whole Engine/sensors');
+addpath('./Simulation')
+addpath('./Simulation/Combustion');
+addpath('./Simulation/Flight');
+addpath('./Simulation/Thrust');
+addpath('./Plots');
