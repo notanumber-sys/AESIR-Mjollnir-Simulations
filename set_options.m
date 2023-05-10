@@ -1,23 +1,24 @@
-function set_options(quick, plot_data, save_plots, static, full_duration, model, Cd, a, n, dr_thdt, n_inj, P_cc_init, T_tank_init, T_ext)
+function set_options(quick, plot_data, save_plots, static, full_duration, model, Cd, a, n, dr_thdt, n_inj, P_cc_init, T_tank_init, T_ext, combustion_efficiency)
     % Sets all options and gets constants.
     global opts
     
     %% Manual settings.
-    opts.quick = quick;                         % True if quick simulation should be done, might be less accurate. Useful for tuning.
-    opts.plot_data = plot_data;                 % True if the data should be plot together with the simulations.
-    opts.save_plots = save_plots;               % True if the resulting plots should be saved.
-    opts.static = static;                       % True if simulation should be for a static fire, otherwise it is done for flight.
-    opts.full_duration = full_duration;         % True if the tank parameters should be set to a full-duration burn, otherwise short-duration parameters are used.
-    opts.model = model;                         % Mass flow model, one of {'Moody', 'Dyer'}.
-    opts.Cd = Cd;                               % Discharge coefficient.
-    opts.a = a;                                 % Fuel regression parameter a in r_dot = a*G_o^n (see Sutton, 2017, p. 602).
-    opts.n = n;                                 % Fuel regression parameter n in r_dot = a*G_o^n (see Sutton, 2017, p. 602).
-    opts.dr_thdt = dr_thdt;                     % Constant approximation of regression rate (m/s).
-    opts.n_inj = n_inj;                         % Number of injector holes.
-    opts.P_cc_init = P_cc_init;                 % Initial pressure in the combustion chamber (Pa).
-    opts.T_tank_init = T_tank_init;             % Initial tank temperature (K).
-    opts.T_wall_init = T_tank_init;             % Assume that initial tank wall temperature is equal to the initial internal temperature (K).
-    opts.T_ext = T_ext;                         % External (environment) temperature (K).
+    opts.quick = quick;                                     % True if quick simulation should be done, might be less accurate. Useful for tuning.
+    opts.plot_data = plot_data;                             % True if the data should be plot together with the simulations.
+    opts.save_plots = save_plots;                           % True if the resulting plots should be saved.
+    opts.static = static;                                   % True if simulation should be for a static fire, otherwise it is done for flight.
+    opts.full_duration = full_duration;                     % True if the tank parameters should be set to a full-duration burn, otherwise short-duration parameters are used.
+    opts.model = model;                                     % Mass flow model, one of {'Moody', 'Dyer'}.
+    opts.Cd = Cd;                                           % Discharge coefficient.
+    opts.a = a;                                             % Fuel regression parameter a in r_dot = a*G_o^n (see Sutton, 2017, p. 602).
+    opts.n = n;                                             % Fuel regression parameter n in r_dot = a*G_o^n (see Sutton, 2017, p. 602).
+    opts.dr_thdt = dr_thdt;                                 % Constant approximation of regression rate (m/s).
+    opts.n_inj = n_inj;                                     % Number of injector holes.
+    opts.P_cc_init = P_cc_init;                             % Initial pressure in the combustion chamber (Pa).
+    opts.T_tank_init = T_tank_init;                         % Initial tank temperature (K).
+    opts.T_wall_init = T_tank_init;                         % Assume that initial tank wall temperature is equal to the initial internal temperature (K).
+    opts.T_ext = T_ext;                                     % External (environment) temperature (K).
+    opts.combustion_efficiency = combustion_efficiency;     % Combustion efficiency.
     
     [T_ext_COESA, ~, P_atm, ~] = atmoscoesa(0);
     opts.dT_ext = T_ext_COESA - opts.T_ext;     % Difference between the COESA temperature and the actual temperature (K).
@@ -28,7 +29,6 @@ function set_options(quick, plot_data, save_plots, static, full_duration, model,
     opts.launch_angle = 87;         % Launch angle (°).
     
     opts.drag_coefficient = 0.5;     
-    opts.combustion_efficiency = 0.9;
     
     %% Physical constants.
     opts.g = 9.81;                                  % Gravitational constant (m/s^2).

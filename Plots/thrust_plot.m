@@ -19,9 +19,9 @@ t_data = linspace(0, t_burn, 1000);
 
 %% Thrust.
 subplot(rows, columns, 1);
-plot(t_sim, simulation.F(sim_ind) / 1000)
+plot(t_sim, simulation.F(sim_ind) / opts.combustion_efficiency / 1000)
 hold on
-plot(t_sim, opts.combustion_efficiency * simulation.F(sim_ind) / 1000)
+plot(t_sim, simulation.F(sim_ind) / 1000)
 if opts.plot_data
     plot(t_data, data.THRUST_I(t_data), '--', 'Color', '#EDB120');
 end
