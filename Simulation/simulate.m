@@ -145,13 +145,13 @@ function simulate()
             OF(i) = mf_ox(i) / mf_fuel(i);                                                  % Compute O/F ratio.
             mf_throat(i) = mass_flow_throat(P_cc(i), OF(i), A_t(i));                        % Compute throat mass flow.
 
-            c_star = interp1q(opts.OF_set, opts.c_star_set, OF(i));                         % Compute the characteristic velocity.
+            c_star = opts.c_star_correction * interp1q(opts.OF_set, opts.c_star_set, OF(i));                         % Compute the characteristic velocity.
             T_cc(i) = gam * (2 / (gam + 1))^((gam + 1) / (gam - 1)) * c_star^2 * Mw / R;    % Compute the combustion chamber temperature (see simulation code summary).
             M_ex(i) = exhaust_Mach(A_t(i));                                                 % Compute exhaust mach.
             P_ex(i) = exhaust_pressure(P_cc(i), P_ext(i), M_ex(i));                         % Compute exhaust pressure.
             v_ex(i) = exhaust_speed(T_cc(i), P_ex(i), P_cc(i));                             % Compute exhaust speed.
 
-            F(i) = opts.combustion_efficiency * thrust(mf_throat(i), v_ex(i), P_ext(i), P_ex(i));                       % Compute thrust.
+            F(i) = opts.thrust_correction * thrust(mf_throat(i), v_ex(i), P_ext(i), P_ex(i));                       % Compute thrust.
             cp_air(i) = py.CoolProp.CoolProp.PropsSI('C', 'P', P_ext(i), 'T', (T_ext(i) + T_tank_wall(i)) / 2, 'Air');  % Compute constant pressure of air.
             m_fuel(i) = opts.rho_fuel * pi * opts.L_fuel * (opts.D_cc_int^2 / 4 - r_cc(i)^2);                           % Compute fuel mass (density * pi * length * (fuel_r^2 - cc_r^2)).
         else

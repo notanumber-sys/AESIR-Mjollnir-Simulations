@@ -43,11 +43,11 @@ function [state_vector, m_tot, h_liq, h_gas, h_air_ext] = system_equations(~, u)
     P_tank = P_N2O;     % Key assumption (I think): Tank pressure is at the point of N2O saturation.
      
     mf_ox = mass_flow_oxidizer(T_tank, P_tank, P_cc);   % Compute oxidizer mass flow.
-    A_port = pi * r_cc^2;                               % Compute port area.
-    G_o = mf_ox / A_port;                               % Compute oxidizer mass velocity (see Sutton, 2017, p. 602).
-    mf_fuel = mass_flow_fuel(G_o, r_cc);                % Compute fuel mass flow.
-    OF = mf_ox / mf_fuel;                               % Compute O/F ratio.
-    mf_throat = mass_flow_throat(P_cc, OF, A_t);        % Compute throat mass flow.
+    A_port = pi * r_cc^2;                                   % Compute port area.
+    G_o = mf_ox / A_port;                                   % Compute oxidizer mass velocity (see Sutton, 2017, p. 602).
+    mf_fuel = mass_flow_fuel(G_o, r_cc);                    % Compute fuel mass flow.
+    OF = mf_ox / mf_fuel;                                   % Compute O/F ratio.
+    mf_throat = mass_flow_throat(P_cc, OF, A_t);            % Compute throat mass flow.
     
     [Qdot_w_t, h_liq, h_gas] = heat_flux_wall_tank(P_N2O, x_vap, T_tank_wall, T_tank);  % Compute thermal heat flux from the tank wall to the interior.
     [Qdot_ext_w, h_air_ext] = heat_flux_ext_wall(v_rocket, T_ext, P_ext, T_tank_wall);  % Compute thermal heat flux from the exterior to the tank wall.
@@ -56,7 +56,7 @@ function [state_vector, m_tot, h_liq, h_gas, h_air_ext] = system_equations(~, u)
     
     V_cc = pi * (opts.D_cc_int^2 / 4 * opts.L_cc - (opts.D_cc_int^2 / 4 - r_cc^2) * opts.L_fuel);    % Compute volume of the combustion chamber (total_volume - fuel_volume).
     
-    c_star = interp1q(opts.OF_set, opts.c_star_set, OF);                            % Get the characteristic velocity of paraffin with N2O at the current O/F ratio.
+    c_star = opts.c_star_correction * interp1q(opts.OF_set, opts.c_star_set, OF);   % Get the characteristic velocity of paraffin with N2O at the current O/F ratio.
     RTcc_Mw = gamma * (2 / (gamma + 1))^((gamma + 1) / (gamma - 1)) * c_star^2;     % Compute the ratio R * T_cc / Mw (see Sutton, 2017, p. 63).
     T_cc = RTcc_Mw * Mw / R;                                                        % Compute the combustion chamber temperature.
     
@@ -86,7 +86,7 @@ function [state_vector, m_tot, h_liq, h_gas, h_air_ext] = system_equations(~, u)
         end
         state_vector = [0; 0; 0; 0; 0; 0; dxdt; dydt; d2xdt2; d2ydt2];
     else
-        F = opts.combustion_efficiency * thrust(mf_throat, v_ex, P_ext, P_ex);   % Compute thrust.
+        F = opts.thrust_correction * thrust(mf_throat, v_ex, P_ext, P_ex);   % Compute thrust.
         m_tot = m_ox + m_fuel + opts.dry_mass;      % Compute total mass.
         [d2xdt2, d2ydt2] = eq_of_motion(F, m_ox, m_fuel, y, dxdt, dydt, speed_of_sound, rho_ext);
         

@@ -3,7 +3,7 @@ function mf_ox = mass_flow_oxidizer(T_tank, P_tank, P_cc)
     global opts
     
     if strcmp(opts.model, 'Dyer')
-        [P_cc_range, mf_crit] = critical_mf_Dyer(P_tank, T_tank);
+        [P_cc_range, mf_crit] = critical_mf_Dyer(P_tank, T_tank, opts.Cd);
     else
         % Use Moody by default.
         [P_cc_range, mf_crit] = critical_mf_Moody(P_tank, T_tank, opts.Cd);

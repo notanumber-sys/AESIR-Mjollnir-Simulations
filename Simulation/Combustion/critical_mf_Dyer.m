@@ -1,9 +1,8 @@
-function [P_cc, mf_ox] = critical_mf_Dyer(P_tank,T_tank)
+function [P_cc, mf_ox] = critical_mf_Dyer(P_tank,T_tank, Cd)
     %CRITICAL_MF_DYER Summary of this function goes here
     %   Detailed explanation goes here
 
     global opts
-    Cd = opts.Cd;                     %Discharge coefficient
     D_inj = 2 * opts.r_inj;             %Injector diameter
     n_inj = opts.n_inj;               %Number of injector holes
     Ai = n_inj * pi * D_inj^2 / 4;

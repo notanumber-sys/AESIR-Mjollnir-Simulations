@@ -1,4 +1,4 @@
-function set_options(quick, plot_data, save_plots, static, full_duration, model, Cd, a, n, dr_thdt, n_inj, P_cc_init, T_tank_init, T_ext, combustion_efficiency)
+function set_options(quick, plot_data, save_plots, static, full_duration, model, Cd, a, n, dr_thdt, n_inj, P_cc_init, T_tank_init, T_ext, c_star_correction, thrust_correction)
     % Sets all options and gets constants.
     global opts
     
@@ -18,7 +18,8 @@ function set_options(quick, plot_data, save_plots, static, full_duration, model,
     opts.T_tank_init = T_tank_init;                         % Initial tank temperature (K).
     opts.T_wall_init = T_tank_init;                         % Assume that initial tank wall temperature is equal to the initial internal temperature (K).
     opts.T_ext = T_ext;                                     % External (environment) temperature (K).
-    opts.combustion_efficiency = combustion_efficiency;     % Combustion efficiency.
+    opts.c_star_correction = c_star_correction;             % Characteristic velocity correction factor.
+    opts.thrust_correction = thrust_correction;             % Thrust correction factor.
     
     [T_ext_COESA, ~, P_atm, ~] = atmoscoesa(0);
     opts.dT_ext = T_ext_COESA - opts.T_ext;     % Difference between the COESA temperature and the actual temperature (K).

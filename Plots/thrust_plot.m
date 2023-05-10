@@ -19,7 +19,7 @@ t_data = linspace(0, t_burn, 1000);
 
 %% Thrust.
 subplot(rows, columns, 1);
-plot(t_sim, simulation.F(sim_ind) / opts.combustion_efficiency / 1000)
+plot(t_sim, simulation.F(sim_ind) / opts.thrust_correction / 1000)
 hold on
 plot(t_sim, simulation.F(sim_ind) / 1000)
 if opts.plot_data
